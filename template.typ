@@ -1,4 +1,4 @@
-#let title-content = [XX大学实验报告]
+#let title-content = [苏州大学实验报告]
 // 由于 Typst 的限制，为了实现内容框，目前页数必须手动指定。
 #let num-pages = 3
 
