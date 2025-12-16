@@ -1,42 +1,46 @@
-#let title-content = [苏州大学实验报告]
-// 由于 Typst 的限制，为了实现内容框，目前页数必须手动指定。
-#let num-pages = 3
+#let title-content = "苏州大学实验报告"
 
-// 编辑以下基本信息 - Edit the following basic information
-//
-// 这些信息会出现在实验报告开头的表格中。
-// This information appears in the table at the beginning of the report.
-
-// 实验名称 - Name of the assignment
+// 实验名称
 #let assignment = [实验 X、实验名称]
-// 姓名 - Your name
-#let author = [你的姓名]
-// 班级（通常为年级 专业的形式） - Your class (typically "grade major")
+// 姓名
+#let author = [你的名字]
+// 班级（通常为年级 专业的形式）
 #let class = [年级 专业]
-// 实验日期 - When you do the assignment
-#let date = [2025-12-1]
+// 实验日期
+#let date = [1970-01-01]
 // 同组实验者，若没有则填「无」
-// Other group memebers, "无" if there is none
 #let friends = [无]
-// 课程名称 - Name of the course
+// 课程名称
 #let lesson = [XXX 课程实践]
-// 学院 - Name of your school
+// 学院
 #let school = [学院]
-// 学号 - Student ID
+// 学号
 #let student-id = "XXX"
-// 教师 - Name of your teacher
+// 教师
 #let teacher = "XXX"
+// 实验名称（通常为 作业一XXXX 的形式）
+#let lab-name = "作业一XXX"
+
+// 当前页数
+// 由于 Typst 的限制，为了实现内容框，目前页数必须手动指定。
+// 如果写的内容塞不下就改大
+#let num-pages = 1
+
+// 页面比例
+// 如果改了字体，微调这个 83%
+// 不调可能会多页或是渲染缺失
+#let page-percent = 83%
+
+// 改成你想要的字体
+// 默认使用 Windows 内自带字体
+#let kaiti = "KaiTi"
+#let main-font = ("Times New Roman", "SimSun")
+// 代码中的中文看起来很奇怪请往主字体后面加一个中文字体
+#let code-font = ("Consolas", "Microsoft YaHei")
+
+// ----------------------------------以下是模板不要动----------------------------------
 
 #set text(lang: "zh", region: "cn")
-
-// 改成你想要的字体 - Change it to whatever font you like
-// 如果需要用 Windows 自带的字体 - If you need Windows fonts
-//
-// #let kaiti = "KaiTi"
-// #let main-font = ("Times New Roman", "SimSun")
-#let kaiti = "AR PL KaitiM GB"
-#let main-font = ("Noto Serif", "Noto Serif CJK SC")
-
 #set page(
   paper: "a4",
   footer: context [
@@ -44,20 +48,18 @@
       columns: (20%, 60%, 20%),
       inset: 0pt,
       stroke: none,
+
       [],
-      align(center, counter(page).display("第 1 页，共 1 页", both: true)),
-      align(right, text(font: kaiti)[教务处制]),
+      align(center, text(counter(page).display("第 1 页，共 1 页", both: true), fill: rgb("8B8B8B"))),
+      align(right, text(font: kaiti, weight: "bold", fill: rgb("8B8B8B"))[教务处制]),
     )
   ],
 )
-
-// 10.5pt 是五号字
 #set text(font: main-font, size: 10.5pt)
-// 首行缩进两个汉字宽度
+#show raw: set text(font: code-font)
 #set par(first-line-indent: (amount: 2em, all: true))
 #set enum(indent: 2em)
 #set list(indent: 2em)
-
 #set heading(numbering: (..nums) => {
   nums = nums.pos()
   if (nums.len() == 1) {
@@ -68,39 +70,74 @@
 })
 
 #show title: set align(center)
-#show title: set text(font: kaiti, size: 24pt)
+#show title: set text(font: kaiti, size: 24pt, tracking: 0.5em)
 #show heading: set text(size: 10.5pt)
 #show raw: set text(size: 10.5pt)
+
 #title[#underline(title-content)]
 
-// 实验信息表 - Information table
 #block[
   #set text(
     font: kaiti,
     size: 12pt,
   )
   #table(
+    stroke: 0.5pt,
     columns: (auto, auto, auto, 1fr, auto, auto, auto, auto),
     align: center,
-    inset: 2pt,
+    inset: 4pt,
     [院、系], school, [年级专业], class, [姓名], author, [学号], student-id,
     [课程名称], table.cell(colspan: 5)[#lesson], [成绩], [],
     [指导教师], teacher, [同组实验者], table.cell(colspan: 2)[#friends], [实验日期], table.cell(colspan: 2)[#date],
   )
 ]
 
+#show raw.where(block: true): it => {
+  block(
+    fill: rgb("D9D9D9"),
+    width: 100%,
+    inset: 0.5em,
+    it,
+  )
+}
+
+#align(center)[
+  #grid(
+    columns: (auto, auto),
+    column-gutter: 0.5em,
+
+    [实 验 名 称],
+
+    stack(
+      dir: ttb,
+      spacing: 2pt,
+
+      box(lab-name + ""),
+
+      line(length: calc.max(lab-name.len() * 1em, 10em), stroke: 0.5pt),
+    ),
+  )
+]
+
 #block(
   clip: true,
-  stroke: 1pt + black,
+  stroke: 0.5pt + black,
   inset: 6pt,
   width: 100%,
-  // 如果改了字体，微调这个 86%
-  // If you've changed the fonts, adjust the 86% below
-  height: 86% + (num-pages - 1) * 100%,
+  height: page-percent + (num-pages - 1) * 100%,
 )[
+  // ----------------------------------以上是模板不要动--------------------------------
   = 实验目的
 
   = 实验内容
+
+  // 你可以不为代码块指定语言，这样就看起来更像是官方的模板
+  ```rs
+  fn main() {
+    println!("代码块展示")
+  }
+  ```
+
 
   = 实验步骤和结果
 
