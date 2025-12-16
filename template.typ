@@ -1,7 +1,7 @@
 #let title-content = "苏州大学实验报告"
 
 // 实验名称
-#let assignment = [实验 X、实验名称]
+#let assignment = "实验一"
 // 姓名
 #let author = [你的名字]
 // 班级（通常为年级 专业的形式）
@@ -18,8 +18,6 @@
 #let student-id = "XXX"
 // 教师
 #let teacher = "XXX"
-// 实验名称（通常为 作业一XXXX 的形式）
-#let lab-name = "作业一XXX"
 
 // 当前页数
 // 由于 Typst 的限制，为了实现内容框，目前页数必须手动指定。
@@ -33,10 +31,15 @@
 
 // 改成你想要的字体
 // 默认使用 Windows 内自带字体
+// 代码中的中文看起来很奇怪请往 code-font 主字体后面加一个中文字体
 #let kaiti = "KaiTi"
 #let main-font = ("Times New Roman", "SimSun")
-// 代码中的中文看起来很奇怪请往主字体后面加一个中文字体
 #let code-font = ("Consolas", "Microsoft YaHei")
+
+// 下面是自由字体，
+// #let kaiti = "AR PL KaitiM GB"
+// #let main-font = ("Noto Serif", "Noto Serif CJK SC")
+// #let code-font = ("MapleMono NF")
 
 // ----------------------------------以下是模板不要动----------------------------------
 
@@ -112,9 +115,9 @@
       dir: ttb,
       spacing: 2pt,
 
-      box(lab-name + ""),
+      box(assignment + ""),
 
-      line(length: calc.max(lab-name.len() * 1em, 10em), stroke: 0.5pt),
+      line(length: calc.max(assignment.len() * 1em, 10em), stroke: 0.5pt),
     ),
   )
 ]
