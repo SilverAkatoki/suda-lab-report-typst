@@ -60,9 +60,9 @@
 )
 #set text(font: main-font, size: 10.5pt)
 #show raw: set text(font: code-font)
-#set par(first-line-indent: (amount: 2em, all: true))
-#set enum(indent: 2em)
-#set list(indent: 2em)
+#set par(first-line-indent: (amount: 0em, all: true))
+#set enum(indent: 0em)
+#set list(indent: 0em)
 #set heading(numbering: (..nums) => {
   nums = nums.pos()
   if (nums.len() == 1) {
@@ -77,7 +77,9 @@
 #show heading: set text(size: 10.5pt)
 #show raw: set text(size: 10.5pt)
 
-#title[#underline(title-content)]
+#let idt = { h(2em) }
+
+#title[#underline(title-content, evade: false)]
 
 #block[
   #set text(
@@ -132,7 +134,19 @@
   // ----------------------------------以上是模板不要动--------------------------------
   = 实验目的
 
-  = 实验内容
+  默认是顶格的写法，不然列表层级会有问题。
+
+  - aaa
+  - bbb
+
+  + ccc
+  + ddd
+  + eee
+
+  = 实验内容 
+
+  #idt
+  使用 `#idt` 首行缩进
 
   // 你可以不为代码块指定语言，这样就看起来更像是官方的模板
   ```rs
