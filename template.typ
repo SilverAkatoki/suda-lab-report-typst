@@ -78,6 +78,7 @@
 #show raw: set text(size: 10.5pt)
 
 #let idt = { h(2em) }
+#let idt-block(body) = block(inset: (x: 2em))[#body]
 
 #title[#underline(title-content, evade: false)]
 
@@ -143,7 +144,7 @@
   + ddd
   + eee
 
-  = 实验内容 
+  = 实验内容
 
   #idt
   使用 `#idt` 首行缩进
@@ -154,6 +155,17 @@
     println!("代码块展示")
   }
   ```
+
+  #idt-block[
+    1. 这样写列表会看的顺眼一些
+    2. 用 `#idt-box` 包裹
+  ]
+
+  #idt-block[
+    ```rs
+    assert!("代码块也是一样的");
+    ```
+  ]
 
 
   = 实验步骤和结果
